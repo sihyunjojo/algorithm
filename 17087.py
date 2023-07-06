@@ -13,12 +13,10 @@ a = list(map(int,input().split()))
 a.append(s)
 a.sort()
 
-tmp = []
+place = []
 for i in range(len(a)-1):
-    tmp.append(a[i+1] - a[i])
-tmp.sort()
-print('a = ',a)
-print('tmp = ', tmp)
+    place.append(a[i+1] - a[i])
+# place.sort()
 
 #logn
 def GCD(x,y):
@@ -26,37 +24,21 @@ def GCD(x,y):
         x,y=y,x%y
     return x
 
+#logn * 10^5
+def arr_GCD(arr):
+    if len(arr) == 1:
+        return arr[0]
+    result = GCD(arr[0],arr[1])
+    for i in range(2,len(arr)):
+        result = GCD(result,arr[i])
+    return result 
+
 # tmp들의 최대공약수 구하기
 # tmp * tmp
 
-def tmp_GCD(tmp):
-    while tmp:
-        if len(tmp) == 1:
-            return tmp
-        temp = []
-        for i in range(len(tmp)-1):
-            print(tmp[i],tmp[i+1],GCD(tmp[i],tmp[i+1]))
-            temp.append(GCD(tmp[i],tmp[i+1]))
-        tmp = temp
-
-print(tmp_GCD(tmp).pop())
-        
-
-    
-        
-    
-    
-for i in range(min(tmp),0,-1):
-    flag = 0
-    for j in tmp:
-        if j % i != 0:
-            flag = 1
-    if flag == 0:
-        print(i)
-        break;
-
-
-# tmp들의 약수
+# print(place)
+print(arr_GCD(place))
+# print(*[123.213,123]) 
 
 #tmp중에서 제일 작은거부터 시작 ~ 1까지
 # tmp가 다 나눠질 수 있으면 
