@@ -1,20 +1,80 @@
-a = [1, 2]
-# a.remove(2)
+import itertools
+from collections import deque
+import copy
+import sys
+
+a = [2,1,2,2,2]
+a.remove(2) # 인덱스x 값을 지워주는거임.
 print(a)
 
+# foods.sort(key=lambda x: x[1])
 
-newList = [i for i in a if a == [1, 2]]
+#my_set = {1, 2, 3, 4, 5}
+#my_set = set([1, 2, 3, 4, 5])
+# set끼리 집합 연산 가능 합집합: | 교집합 : & 차집합: -
+print(float('inf') >= 1000000000)
+global AAA
+#000 1행
+#000 2행
+#3열 2행
+
+
+# info, count = map(int, input().split())  # 숫자판의 정보, 교환횟수
+# info = str(info)
+# # 반드시 횟수만큼 교환이 이루어져야 하고 동일한 위치의 교환이 중복되어도 된다.
+#
+# now = set([info])
+# nxt = set()
+# for _ in range(count):
+#     while now:
+#         s = now.pop()
+#         s = list(s)
+#         for i, j in make_combination(info):
+#             s[i], s[j] = s[j], s[i]
+#             nxt.add(''.join(s))
+#             s[i], s[j] = s[j], s[i]
+#     now, nxt = nxt, now # 사실상 set()
+#
+# ans = max(map(int, now))
+# print(f'#{test_case} {ans}')
+
+newList = [i for i in a if a == [2,1]]
 print(newList)
 newList = [i for i in a if i == 1]
 print(newList)
 print()
+a = [1,2,3,4,5,6]
+a.sort(reverse=True)
+print("역 정렬된 리스트 내림순", a)
+a.sort(reverse=False)
+print("정렬된 리스트 ", a)
 
 n = 1
 # arr = [0] + [int(input()) for _ in range(n)]
 # print(arr)
-print("조합")
 # nPr 서로 다른 것들 중 몇개를 뽑아서 나열하는것
 # nPr : n! / (n-r)!
+# nCr 서로 다른 n개의 원소 중 r개를 순서 없이 골라낸것
+# nCr n! / (n-r)!r!
+my_list = [1, 2, 3, 4]
+
+# 순열: 서로 다른 n개의 원소에서 r개를 중복 없이 선택하여 순서대로 나열
+# 선택하는 순서가 다르면 서로 다른 것 (즉, AB와 BA가 다르다)
+# 중복순열 : AAA, AAB, AAC, AAD, ABA, ABB, …., DDA, DDB, DDC, DDD
+
+print("순열 ")
+print(list(itertools.permutations(my_list, 2)))
+
+# 조합: 서로 다른 n개의 원소에서 r개를 중복 없이 선택하여 순서대로 나열
+# 뽑는 순서와 관계 없음 (즉, AB와 BA가 같다.)
+# 리스트에서 조합 구하기
+print("조합 ")
+result = list(itertools.combinations(my_list, 2))
+# 중복조합(중복제외한)
+print(list(itertools.combinations_with_replacement(my_list, 2)))
+
+
+print(result)
 
 for i in range(2, 5):
     print(i)
@@ -56,10 +116,38 @@ for i in range(2):
             for l in range(2):
                 bit[3] = l
                 print(bit)
+
 print("이진 검색")
 # 이진검색
 # 정렬된 리스트에서
 # 중앙을 기준으로 중앙값보다 크면 오른쪽 작으면 왼쪽을 검사하는 식으로 반복
+print("햄버거 다이어트")
+# food를 함수의 매개변수로 안씀.
+# i 라는 반복 횟수를 뜻하는 무언가를 함수에 꼭 넣어줌
+def cook(i, score, calo):
+    global result
+    if i == n:
+        if calo < L and result <= score:
+            result = score
+    else:
+        s, c = foods[i]
+        cook(i + 1, score + s, calo + c)
+        cook(i + 1, score, calo)
+
+    return result
+
+
+# n, L = map(int, input().split())  # 재료수, 제한칼로리
+n, L = 5, 1000
+foods = []
+# for _ in range(n):
+#     foods.append(list(map(int, input().split())))
+foods = [[100,200],[300,500],[250,300],[500,1000],[400,400]]
+# 같은 재료를 여러 번 사용할 수 없으며, 햄버거의 조합의 제한은 칼로리를 제외하고는 없다.
+
+result = 0
+
+print(f"{cook(0,0,0)}")
 
 # 문자열은 시퀀스 자료형으로 분리되므로, 인덱싱, 슬라이싱 연산 사용가능
 a = "abcde"
@@ -91,6 +179,7 @@ print(not all(char in "abcd" for char in "abcdwqd"))
 print("abc" in "abcdef")
 print("ac" in "abcdef")
 
+print("회문찾기")
 #
 # # 가로 세로 회문 찾기
 # def is_palindrome(s):
@@ -259,14 +348,59 @@ def output_gravity(boxes):
 # 1. 피연산자를 만나면 스택에 push해야함.
 # 2. 연산자를 만나면 필요한 만큼 피연사자를 스택에서 pop하 연산하고, 결과를 Push
 # 3. 수식이 끝나면 마지막 스택 pop
-print("string 연")
+print("string 연결 계산 ")
 print(eval("6+5*(2-8)/2"))
 # print(eval("6528-*2/+"))
 
 
 #백트래킹
 print("백트래킹")
+def is_safe(board, row, col, n):
+    # Check if there is a queen in the same row to the left
+    for i in range(col):
+        if board[row][i] == 1:
+            return False
 
+    # Check if there is a queen in the upper diagonal on the left
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+
+    # Check if there is a queen in the lower diagonal on the left
+    for i, j in zip(range(row, n, 1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+
+    return True
+
+def solve_n_queens_util(board, col, n):
+    if col >= n:
+        return True
+
+    for i in range(n):
+        if is_safe(board, i, col, n):
+            board[i][col] = 1
+
+            if solve_n_queens_util(board, col + 1, n):
+                return True
+
+            board[i][col] = 0
+
+    return False
+
+def solve_n_queens(n):
+    board = [[0] * n for _ in range(n)]
+
+    if not solve_n_queens_util(board, 0, n):
+        print("No solution exists.")
+        return
+
+    for row in board:
+        print(row)
+
+# Example: N-Queens for N=4
+solve_n_queens(4)
+# 순열: 서로 다른 n개의 원소에서 r개를 중복 없이 선택하여 순서대로 나열
 def backtrack(arr, path=[]):
     # 종료 조건: 만들어진 후보가 최종 해결책인 경우
     if len(path) == len(arr):
@@ -279,14 +413,58 @@ def backtrack(arr, path=[]):
             path.append(element)
             backtrack(arr, path)
             path.pop()  # 백트래킹
-
 # 예제 사용
 elements = [1, 2, 3]
 backtrack(elements)
 
+print("n-queen")
+def is_safe(board, row, col):
+    # 현재 위치에 퀸을 놓을 수 있는지 확인하는 함수
+    for i in range(row):
+        if board[i] == col or \
+           board[i] - i == col - row or \
+           board[i] + i == col + row:
+            return False
+    return True
+
+def print_solution(board):
+    # 현재 퀸의 배치를 출력하는 함수
+    for row in range(len(board)):
+        line = ["Q" if i == board[row] else "." for i in range(len(board))]
+        print(" ".join(line))
+    print()
+
+def solve_n_queens_util(board, row):
+    # 현재 행에 퀸을 놓을 수 있는지 여부를 확인
+    n = len(board)
+
+    if row == n:
+        # 모든 행에 퀸을 놓았으면 현재 상태를 출력
+        print_solution(board)
+        return
+
+    for col in range(n):
+        if is_safe(board, row, col):
+            # 퀸을 현재 위치에 놓고 재귀적으로 다음 행을 확인
+            board[row] = col
+            solve_n_queens_util(board, row + 1)
+
+# N-퀸 문제를 해결하는 함수
+def solve_n_queens(n):
+    board = [-1] * n  # 각 행에 퀸이 있는 열을 저장
+    solve_n_queens_util(board, 0)
+
+# Example: N-Queens for N=4
+solve_n_queens(4)
+
+
+# Example: N-Queens for N=4
+solve_n_queens(4)
+
+
+
 print("========================")
 print("===========Queue==================")
-from collections import deque
 
 # 큐 생성
 queue = deque([1, 2, 3, 4, 5])
@@ -316,7 +494,6 @@ print("우선순위 큐====")
 
 #BFS
 print("BFS=======")
-from collections import deque
 
 def bfs(graph, start):
     visited = [False] * len(graph)  # 노드의 방문 여부를 저장하는 리스트
@@ -352,7 +529,6 @@ print()
 
 # 미로 BFS
 print("미로 BFS=====")
-from collections import deque
 
 def bfs_maze(maze, start, end):
     N = len(maze)
@@ -410,7 +586,70 @@ print()
 print("float('inf')는 파이썬에서 무한대(infinity)를 나타내는 값입니다.=====")
 
 # 깊은 복사 얕은 복사
+old_list = [1,2,3]
 new_list = old_list
 new_list = old_list[:] # 깊은 복사
-import copy
-new_list = copy.deepcopy(old_list) #리스트의 원소지들까 깊은 복사
+new_list = copy.deepcopy(old_list) #리스트의 원소지까 깊은 복사
+# list.insert("넣을위치", "넣을값");
+
+
+## 출력 방식
+print("출력 기법")
+result = [1,2,3,4,5]
+print(' '.join(map(str, result)))
+
+## iterater(numbers)를 앞으로 되돌아가서 반복시킬때 알면 좋은 기법
+# target = (start + M) % len(numbers)
+# AAA를 16진수를 10진수로 변화 시킨후, 형태를 20자리수의 바이너리 형태로 반환(빈자리는0으로)
+print(format(int("AAA", 16), '020b'))
+
+print("=============dp==============")
+print("동전 거스름돈")
+input = sys.stdin.readline
+
+# 입력
+n = 12
+
+# DP
+if n == 1:
+    print(-1)
+elif n == 2:
+    print(1)
+elif n == 3:
+    print(-1)
+elif n == 4:
+    print(2)
+else:
+    dp = [100000] * (n + 1)
+    dp[2] = 1
+    dp[4] = 2
+    dp[5] = 1
+
+    for i in range(5, n+1):
+        dp[i] = min(dp[i], dp[i-2]+1, dp[i-5]+1)
+
+    print(-1 if dp[n] == 100000 else dp[i])
+
+# 배낭문제 - 배낭에 담을 수 있는 무게가 정해져 있고, 그 안에 최대한의 가치를 넣어야하는 경우
+# 아이템당 무게 , 가치의 값을 입력 받음
+# k[][] # -1로 초기화 된 2차원 배열
+# n # 주어진 아이템의 개수
+# i # 배낳에 넣을 물건을 나타내는 값
+# w # 배낭의 남은 무게
+# w[i] # i번째 아이템의 무게
+
+print("DP + 재귀 + 배낭 무게 최고 가치")
+# 배낭의 넣을 물건과 현재 배낭의 남은 무게을 입력받아서 그 상태에서 가장 높은 가치를 가지는 것을 반환하는 함수
+
+def knapsack(i,w):
+    if k[i][w] != -1:
+        return k[i][w]
+
+    if i == 0 or w == 0:
+        k[i][w] = 0
+        return k[i][w]
+    else:
+        if w > w[i]:
+            return max(knapsack(i-1, w-w[i]) + k[i][w],
+                       knapsack(i-1, w))
+
