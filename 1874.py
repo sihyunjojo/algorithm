@@ -3,6 +3,7 @@ answer = [0]
 result = []
 arr = [i for i in range(1,n+1)][::-1]
 flag_answer = []
+
 for i in range(n):
     result.append(int(input()))
 

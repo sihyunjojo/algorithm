@@ -4,10 +4,13 @@ import copy
 import sys
 
 a = [2,1,2,2,2]
-a.remove(2) # 인덱스x 값을 지워주는거임.
+a.remove(2) # 인덱스x  값을 지워주는거임.
 print(a)
 
 # foods.sort(key=lambda x: x[1])
+
+# 달팽이 패턴을 위한 방향 설정 (우, 하, 좌, 상)
+directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 #my_set = {1, 2, 3, 4, 5}
 #my_set = set([1, 2, 3, 4, 5])

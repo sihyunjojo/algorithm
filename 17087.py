@@ -21,7 +21,7 @@ for i in range(len(a)-1):
 #logn
 def GCD(x,y):
     while(y):
-        x,y=y,x%y
+        x,y= y, x%y
     return x
 
 #logn * 10^5

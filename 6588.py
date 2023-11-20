@@ -15,10 +15,11 @@ for i in range(2, int(MAX**1/2)+1):
         arr[i*j] = False
         j += 1
 
+
 n = int(input())
 while n != 0:
     flag = 0
-    for i in range(3,int(n/2+1)):
+    for i in range(3, int(n/2+1)):
         print(i,arr[i])
         if arr[i] == True and arr[n-i] == True:
             flag = 1
