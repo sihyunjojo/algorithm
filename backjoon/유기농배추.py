@@ -1,10 +1,3 @@
-def find_start_point(new_board):
-    for i in range(len(new_board)):
-        for j in range(len(new_board[i])):
-            if new_board[i][j] == 1:
-                return i, j
-
-
 def bfs(a, b, new_board):
     stack = [[a, b]]
     delta_list = [[1, 0], [0, 1], [-1, 0], [0, -1]]
@@ -27,6 +20,19 @@ def bfs(a, b, new_board):
     return new_board
 
 
+# def dfs(y, x):
+#   if y<0 or x < 0 or x >= m or y >= n:
+#     return False
+#   if graph[y][x] == 0:
+#     return False
+#   graph[y][x] = 0
+#   dfs(y+1, x)
+#   dfs(y-1, x)
+#   dfs(y, x+1)
+#   dfs(y, x-1)
+#   return True
+
+
 def make_board():
     board = list(list(0 for _ in range(m)) for _ in range(n))
 
@@ -44,6 +50,7 @@ for test_case in range(int(input())):
     count = 0
 
     init_board = make_board()
+    # 52,47번째 줄 합칠 수 있음.
     temp_board = init_board
 
     # print(place_arr)
