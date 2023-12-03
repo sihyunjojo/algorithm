@@ -1,71 +1,44 @@
-def a_find_min_time(doro_list, all_time, checker):
-    global a_min_time
-    checker[doro_list[0]] = True
-    print(checker)
-    all_time += doro_list[1]
-    if doro_list[0] == x:
-        print('all_time', all_time)
-        a_min_time = min(all_time, a_min_time)
-        return
+import heapq
+import sys
 
-    for i in doro[doro_list[0]]:
-        if not checker[i[0]]:
-            a_find_min_time(i, all_time, checker)
+input = sys.stdin.readline
+INF = float('inf')
 
+def daik(start):
+    q = []
+    distance = [INF] * (n + 1)
 
-def b_find_min_time(doro_list, all_time, checker):
-    global b_min_time
-    checker[doro_list[0]] = True
+    heapq.heappush(q, (0, start))
+    distance[start] = 0
 
-    all_time += doro_list[1]
-    if doro_list[0] == start_house:
-        print('1',doro_list)
-        print('start_house',start_house)
-        b_min_time = min(all_time, b_min_time)
-        return
+    while q:
+        dist, point = heapq.heappop(q)
 
-    for i in doro[doro_list[0]]:
-        if not checker[i[0]]:
-            a_find_min_time(i, all_time, checker)
+        if distance[point] < dist:
+            continue
 
+        for new_start, new_dist in doro[point]:
+            temp_dist = dist + new_dist
+
+            if distance[new_start] > temp_dist:
+                distance[new_start] = temp_dist
+                heapq.heappush(q, (temp_dist, new_start))
+
+    return distance
 
 n, m, x = map(int, input().split())
-doro = list([] for i in range(n + 1))
+doro = list([] for _ in range(n + 1))
 
 for _ in range(m):
     start, end, time = map(int, input().split())
-    doro[start].append([end, time])
+    doro[start].append((end, time))
 
 print("doro = ", doro)
 
-time_for_student = []
+result = []
+for i in range(1, n+1):
+    in_time = daik(i)
+    out_time = daik(x)
+    result.append(in_time[x] + out_time[i])
 
-for start_house in range(1, n + 1):
-    if start_house != x:
-        a_min_time = float('inf')
-        b_min_time = float('inf')
-        for doro_element in doro[start_house]:
-            a_checker = [False for _ in range(n + 1)]
-            a_checker[start_house] = True
-            print('element',doro_element)
-            a_find_min_time(doro_element, 0, a_checker)
-        print()
-        for doro_element in doro[x]:
-            print('element',doro_element)
-            b_checker = [False for _ in range(n + 1)]
-            b_checker[x] = True
-            b_find_min_time(doro_element, 0, b_checker)
-        print(a_min_time)
-        print(b_min_time)
-    if start_house == x:
-        a_min_time = 0
-        b_min_time = 0
-    time_for_student.append([a_min_time,b_min_time])
-    print()
-print(time_for_student)
-# 3 1 2
-# 2 + 4
-# 2 1 3
-# 1 + 2
-# 2 1 3 4
-# 1 2 4 = 7
+print(max(result))
