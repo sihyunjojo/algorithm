@@ -2,6 +2,7 @@ import itertools
 from collections import deque
 import copy
 import sys
+
 input = sys.stdin.readline
 
 a = [2,1,2,2,2]

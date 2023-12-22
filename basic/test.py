@@ -1,40 +1,20 @@
-import heapq
-import sys
+r, c = map(int,input().split())
+arr = list(input() for _ in range(r))
 
-input = sys.stdin.readline
-INF = float('inf')
+delta = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+visited = [False for _ in range(26)]
+stack = [(0, 0)]
+walk = 0
 
-def daik(start):
-    q = []
-    distance = [INF] * (n + 1)
+while stack:
+    x, y = stack.pop()
+    visited[ord(arr[x][y])-65] = True
 
-    heapq.heappush(q, (0, start))
-    distance[start] = 0
-    while q:
-        dist, point = heapq.heappop(q)
-        if distance[point] < dist:
-            continue
+    for d in delta:
+        dx = d[0] + x
+        dy = d[1] + y
+        if 0 <= dx < r and 0 <= dy < c:
+            if not visited[ord(arr[dx][dy])-65]:
+                stack.append((dx, dy))
 
-        for node_index, node_cost in doro[point]:
-            cost = dist + node_cost
-
-            if distance[node_index] > cost:
-                distance[node_index] = cost
-                heapq.heappush(q, (cost, node_index))
-
-    return distance
-
-n, m, x = map(int, input().split())
-doro = list([] for _ in range(n + 1))
-
-for _ in range(m):
-    start, end, time = map(int, input().split())
-    doro[start].append((end, time))
-
-result = []
-for i in range(1, n+1):
-    in_time = daik(i)
-    out_time = daik(x)
-    result.append(in_time[x] + out_time[i])
-
-print(max(result))
+print(visited.count(True))
