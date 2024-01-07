@@ -9,15 +9,11 @@ start_point = int(input())
 graph = {}
 for i in range(1,v_count+1):
     graph[i] = {}
-distances = [0 if start_point == i else INF for i in range(v_count + 1)]
+distances = {node: 0 if node == start_point else float('inf') for node in graph}
 
 
 for i in range(e_count):
     a, b, c = map(int, input().split())
-
-    # if a not in graph:
-    #     graph[a] = {}
-
     graph[a][i] = [b, c]
 
 print(graph)
@@ -37,7 +33,7 @@ while queue:
             distances[new_destination] = distance
             heapq.heappush(queue, [distance, new_destination])
 
-for i in distances[1:]:
+for destination, distance in distances.items():
     if i != INF:
         print(i)
     elif i == INF:
