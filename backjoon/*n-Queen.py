@@ -8,7 +8,7 @@ board = [0 for i in range(n)]
 def check(line):
 
     #핵심 = line을 넣는 것 N이 아니라
-   for i in range(line):
+    for i in range(line):
         if (board[line] == board[i]) or (abs(board[line] - board[i]) == abs(line - i)):
             print('a')
             return False
