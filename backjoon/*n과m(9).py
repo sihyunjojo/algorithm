@@ -17,7 +17,6 @@ def per(count):
             per(i)
             arr.pop()
             arr1.pop()
-            # visited[i] = False
 
 per(0)
 print(dp)
