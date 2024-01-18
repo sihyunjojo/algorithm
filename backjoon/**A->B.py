@@ -13,11 +13,15 @@ def go(n, count):
 
 go(a,1)
 
-
-# print(dp)
-
-# print(dp)
-# print(list(dp.keys()).count(21));
+# cnt=1
+# while True:
+#     if b%2==0:b=b//2;cnt+=1
+#     elif b%10==1:b=(b-1)//10;cnt+=1
+#     else:
+#         if a!=b:cnt=-1;break
+#     if a==b:break
+#     if a>b:cnt=-1;break
+# print(cnt)
 print(dp[b])
 
 
