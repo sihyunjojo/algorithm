@@ -12,7 +12,20 @@ def go(n, count):
     go(n * 2, count+1)
 
 go(a,1)
-
+# r =1
+# while (b != a):
+#     r += 1
+#     temp = b
+#     if b % 10 == 1:
+#         b //= 10
+#     elif b % 2 == 0:
+#         b //= 2
+#
+#     if temp == b:
+#         print(-1)
+#         break
+# else:
+#     print(r)
 # cnt=1
 # while True:
 #     if b%2==0:b=b//2;cnt+=1
