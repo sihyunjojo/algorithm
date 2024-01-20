@@ -1,49 +1,58 @@
-from collections import deque
-
 n = int(input())
+board = [list(map(int, input().split())) for _ in range(n)]
 
-board = list(list(input()) for _ in range(n))
-v = [[False] * n for _ in range(n)]
+delta_wid = [(1,0,1,0,1),(1,0,1,1,3)]
+delta_hei = [(0,1,0,1,2),(0,1,1,1,3)]
+delta_dia = [(1,1,1,0,1),(1,1,0,1,2),(1,1,1,1,3)]
 
-count,rg_count = 0,0
-delta = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+result = 0
+stack = [(0,0,1,0,1)]
 
-stack = deque()
+def bfs():
+    global result
 
-
-def bfs(y, x):
-    stack.append((y, x))
-    v[y][x] = True
     while stack:
-        y, x = stack.popleft()
-        # v[y][x] = True
+        fx,fy,sx,sy,sh = stack.pop()
 
-        for d in delta:
-            dx = x + d[0]
-            dy = y + d[1]
-            if 0 <= dx < n and 0 <= dy < n:
-                if board[dy][dx] == board[y][x] and not v[dy][dx]:
-                    v[dy][dx] = True
-                    stack.append((dy, dx))
+        if sx == n-1 and sy == n-1:
+            result += 1
+            continue
+
+        if sh == 1:
+            for d in delta_wid:
+                dfx, dfy, dsx, dsy = fx+d[0],fy+d[1],sx+d[2],sy+d[3]
+                if 0 <= dfx < n and 0 <= dfy < n and 0 <= dsx < n and 0 <= dsy < n:
+                    if board[dsy][dsx] == 0:
+
+                        if d[4] == 3:
+                            if board[sy][sx+1] == 0 and board[sy+1][sx] == 0:
+                                stack.append((dfx, dfy, dsx, dsy, d[4]))
+                        else:
+                            stack.append((dfx, dfy, dsx, dsy, d[4]))
+        elif sh == 2:
+            for d in delta_hei:
+                dfx, dfy, dsx, dsy = fx+d[0],fy+d[1],sx+d[2],sy+d[3]
+                if 0 <= dfx < n and 0 <= dfy < n and 0 <= dsx < n and 0 <= dsy < n:
+                    if board[dsy][dsx] == 0:
+                        if d[4] == 3:
+                            if board[sy][sx+1] == 0 and board[sy+1][sx] == 0:
+                                stack.append((dfx, dfy, dsx, dsy, d[4]))
+                        else:
+                            stack.append((dfx, dfy, dsx, dsy, d[4]))
+        elif sh == 3:
+            for d in delta_dia:
+                dfx, dfy, dsx, dsy = fx+d[0],fy+d[1],sx+d[2],sy+d[3]
+                if 0 <= dfx < n and 0 <= dfy < n and 0 <= dsx < n and 0 <= dsy < n:
+                    if board[dsy][dsx] == 0:
+                        if d[4] == 3:
+                            if board[sy][sx+1] == 0 and board[sy+1][sx] == 0:
+                                stack.append((dfx, dfy, dsx, dsy, d[4]))
+                        else:
+                            stack.append((dfx, dfy, dsx, dsy, d[4]))
 
 
-for i in range(n):
-    for j in range(n):
-        if not v[i][j]:
-            bfs(i, j)
-            count += 1
+bfs()
+print(result)
 
-v = [[False] * n for _ in range(n)]
 
-for i in range(n):
-    for j in range(n):
-        if board[i][j] == 'R':
-            board[i][j] = 'G'
 
-for i in range(n):
-    for j in range(n):
-        if not v[i][j]:
-            bfs(i, j)
-            rg_count += 1
-
-print(count, rg_count)
