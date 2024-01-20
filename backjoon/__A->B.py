@@ -27,6 +27,9 @@ go(a,1)
 # else:
 #     print(r)
 # cnt=1
+
+
+
 # while True:
 #     if b%2==0:b=b//2;cnt+=1
 #     elif b%10==1:b=(b-1)//10;cnt+=1

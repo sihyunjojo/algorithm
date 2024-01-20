@@ -1,6 +1,7 @@
 n = int(input())
 # 핵심
 arr = sorted(list(list(map(int, input().split())) for _ in range(n)), key=lambda x: (x[1],x[0]))
+# 리스트 연결인가?
 
 end, count = 0, 0
 for i, j in arr:
