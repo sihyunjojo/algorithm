@@ -281,8 +281,6 @@ def factorial_dp(n):
     return dp[n]
 
 # dp 2*1 그 문제
-# memo[n] = count_ways(n - 1, memo) + 2 * count_ways(n - 2, memo)
-
 
 #DFS 스택으로 구현
 
